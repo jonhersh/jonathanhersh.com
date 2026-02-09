@@ -4,7 +4,7 @@
 const fields = [
   { name: "name", label: "Name", type: "text", required: true },
   { name: "email", label: "Email", type: "email", required: true },
-  { name: "company", label: "Company", type: "text", required: false },
+  { name: "firm", label: "Firm/Org", type: "text", required: false },
   { name: "phone", label: "Phone", type: "tel", required: false }
 ] as const;
 
