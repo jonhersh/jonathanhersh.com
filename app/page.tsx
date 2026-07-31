@@ -1,12 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
-import { pageSeo, selectedResearchByNewest, site } from "@/src/content/site";
+import { FaqAccordion } from "@/components/faq-accordion";
+import { JsonLd } from "@/components/json-ld";
+import { buildMetadata, faqSchema, profilePageSchema } from "@/lib/seo";
+import { papersByNewest } from "@/src/content/research";
+import { pageSeo, site } from "@/src/content/site";
 
-export const metadata = buildMetadata(pageSeo.home.title, pageSeo.home.description, "/");
+export const metadata = buildMetadata(pageSeo.home.title, pageSeo.home.description, "/", {
+  keywords: site.entity.knowsAbout
+});
 
 export default function HomePage() {
-  const featuredResearch = selectedResearchByNewest().slice(0, 3);
+  const featuredResearch = papersByNewest().slice(0, 3);
 
   return (
     <>
@@ -16,6 +21,10 @@ export default function HomePage() {
           <div>
             <p className="text-sm uppercase tracking-[0.2em] text-brand-ocean">Economist &middot; AI &amp; Labor &middot; Expert Witness</p>
             <h1 className="mt-3 text-4xl leading-tight md:text-6xl">{site.hero.title}</h1>
+            {/* Lead answer — first extractable paragraph on the page. */}
+            <p className="mt-6 max-w-2xl border-l-4 border-brand-accent pl-5 text-lg font-medium leading-8 text-brand-ink">
+              {site.home.summary}
+            </p>
             <p className="mt-6 max-w-2xl text-base leading-8 text-brand-ink/85">{site.hero.body}</p>
             <p className="mt-4 max-w-2xl text-base leading-8 text-brand-ink/85">{site.hero.helpLine}</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -30,11 +39,14 @@ export default function HomePage() {
               </Link>
             </div>
           </div>
+          {/* width/height must match the source's intrinsic ratio (1080x1616),
+              otherwise the reserved box is wrong and the page shifts on load. */}
           <Image
-            src="/media/headshot.jpg"
+            src="/media/headshot.webp"
             alt="Jonathan Hersh, PhD"
-            width={600}
-            height={750}
+            width={1080}
+            height={1616}
+            sizes="(min-width: 768px) 40vw, 100vw"
             className="h-auto w-full rounded-lg"
             priority
           />
@@ -53,11 +65,35 @@ export default function HomePage() {
                 key={logo.name}
                 src={logo.src}
                 alt={logo.alt}
-                width={100}
-                height={40}
+                width={logo.width}
+                height={logo.height}
                 className="h-8 w-auto object-contain opacity-60"
               />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quick facts — structured, extractable credential summary */}
+      <section className="section-space">
+        <div className="container-shell">
+          <h2 className="text-2xl">Quick Facts</h2>
+          <div className="mt-6 overflow-x-auto">
+            <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
+              <caption className="sr-only">
+                Credentials and background for Jonathan Hersh, PhD
+              </caption>
+              <tbody>
+                {site.entity.quickFacts.map((fact) => (
+                  <tr key={fact.label} className="border-b border-brand-ink/10 align-top">
+                    <th scope="row" className="w-56 py-3 pr-6 font-semibold text-brand-ink">
+                      {fact.label}
+                    </th>
+                    <td className="py-3 leading-7 text-brand-ink/85">{fact.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -91,9 +127,14 @@ export default function HomePage() {
           <p className="mt-4 max-w-3xl leading-8 text-brand-ink/85">{site.home.research.body}</p>
           <div className="mt-8 space-y-6">
             {featuredResearch.map((item) => (
-              <article key={item.title}>
+              <article key={item.slug}>
                 <p className="text-sm text-brand-ink/60">{item.venue} &middot; {item.year}</p>
-                <h3 className="mt-1 text-lg font-semibold">{item.title}</h3>
+                <h3 className="mt-1 text-lg font-semibold">
+                  <Link href={`/research/${item.slug}`} className="hover:text-brand-ocean">
+                    {item.title}
+                  </Link>
+                </h3>
+                <p className="mt-1 text-sm leading-7 text-brand-ink/75">{item.keyFinding}</p>
               </article>
             ))}
           </div>
@@ -168,6 +209,32 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+
+      {/* FAQ — entity-establishing answers, mirrored in FAQPage schema */}
+      <section className="section-space">
+        <div className="container-shell">
+          <h2 className="text-2xl">Frequently Asked Questions</h2>
+          <div className="mt-6">
+            <FaqAccordion items={site.home.faq} />
+          </div>
+        </div>
+      </section>
+
+      <div className="container-shell pb-10">
+        <p className="text-sm text-brand-ink/55">
+          Last reviewed:{" "}
+          <time dateTime={site.metadata.lastReviewed}>
+            {new Date(`${site.metadata.lastReviewed}T00:00:00Z`).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              timeZone: "UTC"
+            })}
+          </time>
+        </p>
+      </div>
+
+      <JsonLd schema={[profilePageSchema(), faqSchema(site.home.faq, "/")]} />
     </>
   );
 }

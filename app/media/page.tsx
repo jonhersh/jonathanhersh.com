@@ -1,14 +1,31 @@
 import Image from "next/image";
 import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
+import { Breadcrumbs } from "@/components/breadcrumbs";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbSchema, buildMetadata, mediaSchema, webPageSchema } from "@/lib/seo";
 import { pageSeo, site } from "@/src/content/site";
 
-export const metadata = buildMetadata(pageSeo.media.title, pageSeo.media.description, "/media");
+export const metadata = buildMetadata(pageSeo.media.title, pageSeo.media.description, "/media", {
+  keywords: [
+    "AI economist media",
+    "expert commentary AI jobs",
+    "economist press room",
+    "AI labor market expert interview",
+    "future of work commentator"
+  ]
+});
 
 export default function MediaPage() {
   return (
     <section className="section-space">
       <div className="container-shell space-y-10">
+        <Breadcrumbs
+          trail={[
+            { name: "Home", path: "/" },
+            { name: "Media & Press", path: "/media" }
+          ]}
+        />
+
         {/* Header */}
         <header className="max-w-4xl">
           <p className="text-sm uppercase tracking-[0.2em] text-brand-ocean">Press Room</p>
@@ -43,6 +60,7 @@ export default function MediaPage() {
                     src={item.image}
                     alt={`${item.outlet} image for ${item.title}`}
                     fill
+                    sizes="(min-width: 1024px) 33vw, 100vw"
                     className="object-cover"
                   />
                 </div>
@@ -129,7 +147,14 @@ export default function MediaPage() {
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {site.mediaPage.headshots.map((photo) => (
               <div key={photo.label} className="overflow-hidden rounded-xl border border-brand-ink/10">
-                <Image src={photo.src} alt={photo.label} width={400} height={400} className="h-auto w-full object-cover" />
+                <Image
+                  src={photo.src}
+                  alt={photo.label}
+                  width={photo.width}
+                  height={photo.height}
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="h-auto w-full object-cover"
+                />
                 <p className="p-3 text-center text-sm text-brand-ink/75">{photo.label}</p>
               </div>
             ))}
@@ -152,6 +177,25 @@ export default function MediaPage() {
           </div>
         </section>
       </div>
+
+      <JsonLd
+        schema={[
+          webPageSchema({
+            path: "/media",
+            name: pageSeo.media.title,
+            description: pageSeo.media.description,
+            type: "CollectionPage"
+          }),
+          ...mediaSchema({
+            appearances: site.mediaPage.items,
+            quotes: site.mediaPage.selectedQuotes
+          }),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Media & Press", path: "/media" }
+          ])
+        ]}
+      />
     </section>
   );
 }

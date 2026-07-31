@@ -1,9 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
+import { Breadcrumbs } from "@/components/breadcrumbs";
+import { JsonLd } from "@/components/json-ld";
+import { bookSchema, breadcrumbSchema, buildMetadata, webPageSchema } from "@/lib/seo";
 import { pageSeo, site } from "@/src/content/site";
 
-export const metadata = buildMetadata(pageSeo.book.title, pageSeo.book.description, "/book");
+export const metadata = buildMetadata(pageSeo.book.title, pageSeo.book.description, "/book", {
+  keywords: [
+    "AI Proof Jobs",
+    "AI proof careers",
+    "future of work book",
+    "skills AI can't replace",
+    "AI and employment"
+  ]
+});
 
 const themes = [
   {
@@ -65,10 +75,17 @@ export default function BookPage() {
   return (
     <section className="section-space">
       <div className="container-shell space-y-14">
+        <Breadcrumbs
+          trail={[
+            { name: "Home", path: "/" },
+            { name: "Book", path: "/book" }
+          ]}
+        />
+
         <header className="grid gap-10 md:grid-cols-[0.45fr_0.55fr] md:items-center">
           <div className="overflow-hidden rounded-xl shadow-lg">
             <Image
-              src="/media/ai_proof_jobs_image.png"
+              src="/media/ai_proof_jobs_image.webp"
               alt="AI Proof Jobs book cover"
               width={600}
               height={900}
@@ -79,6 +96,9 @@ export default function BookPage() {
           <div>
             <p className="text-sm uppercase tracking-[0.2em] text-brand-ocean">Book</p>
             <h1 className="mt-2 text-4xl md:text-5xl">{site.bookPage.title}</h1>
+            <p className="mt-3 text-lg text-brand-ink/70">
+              {site.bookPage.fullTitle} &mdash; a forthcoming book by Jonathan Hersh, PhD
+            </p>
             <p className="mt-5 text-lg leading-8 text-brand-ink/85">
               AI is transforming everything—but it doesn&apos;t have to leave workers behind. <em>AI Proof Jobs</em> breaks down which jobs are at risk, which are poised to grow, and what people can do today to build resilience in an AI-driven world. It&apos;s a handbook for anyone who wants to stay one step ahead of the machines.
             </p>
@@ -125,6 +145,21 @@ export default function BookPage() {
           </div>
         </div>
       </div>
+
+      <JsonLd
+        schema={[
+          webPageSchema({
+            path: "/book",
+            name: pageSeo.book.title,
+            description: pageSeo.book.description
+          }),
+          bookSchema(),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Book", path: "/book" }
+          ])
+        ]}
+      />
     </section>
   );
 }

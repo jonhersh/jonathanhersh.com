@@ -1,0 +1,37 @@
+# Cloudflare headers for the static export (see wrangler.jsonc -> assets.directory).
+# Ordered most-specific first; Cloudflare applies every matching rule.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+# Next emits content-hashed filenames here, so these can never go stale.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images and PDFs are not content-hashed. A week is long enough to help repeat
+# visits without stranding a correction for months.
+/research/*
+  Cache-Control: public, max-age=604800
+
+/media/*
+  Cache-Control: public, max-age=604800
+
+/logos/*
+  Cache-Control: public, max-age=604800
+
+/cv.pdf
+  Cache-Control: public, max-age=86400
+
+# Answer engines re-fetch these; keep them fresh.
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/robots.txt
+  Cache-Control: public, max-age=3600
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600

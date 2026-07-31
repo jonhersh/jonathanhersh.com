@@ -16,3 +16,6 @@ pnpm-debug.log*
 /photos/
 /research_papers/
 /docs/
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo

@@ -1,26 +1,43 @@
 import Image from "next/image";
 import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
-import { pageSeo, selectedResearchByNewest, site } from "@/src/content/site";
+import { Breadcrumbs } from "@/components/breadcrumbs";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbSchema, buildMetadata, researchListSchema, webPageSchema } from "@/lib/seo";
+import { papersByNewest } from "@/src/content/research";
+import { pageSeo, site } from "@/src/content/site";
 
-export const metadata = buildMetadata(pageSeo.research.title, pageSeo.research.description, "/research");
+export const metadata = buildMetadata(pageSeo.research.title, pageSeo.research.description, "/research", {
+  keywords: [
+    "AI economics research",
+    "labor market research",
+    "platform economics",
+    "applied machine learning",
+    "satellite imagery poverty mapping",
+    "peer-reviewed economics publications"
+  ]
+});
 
 export default function ResearchPage() {
-  const researchItems = selectedResearchByNewest();
-  const paperKeys: readonly string[] = site.researchPage.litigationRelevant.paperKeys;
-  const litigationPapers = researchItems.filter((item) =>
-    paperKeys.includes(item.title)
-  );
+  const researchItems = papersByNewest();
+  const paperSlugs: readonly string[] = site.researchPage.litigationRelevant.paperSlugs;
+  const litigationPapers = researchItems.filter((item) => paperSlugs.includes(item.slug));
 
   return (
     <section className="section-space">
       <div className="container-shell space-y-10">
+        <Breadcrumbs
+          trail={[
+            { name: "Home", path: "/" },
+            { name: "Research", path: "/research" }
+          ]}
+        />
+
         <header className="max-w-4xl">
           <h1 className="text-4xl md:text-5xl">Research</h1>
           <p className="mt-5 leading-8 text-brand-ink/85">{site.researchPage.description}</p>
-          <Link href="/cv.pdf" className="primary-btn mt-6">
+          <a href="/cv.pdf" target="_blank" rel="noreferrer" className="primary-btn mt-6">
             Download CV
-          </Link>
+          </a>
         </header>
 
         {/* Selected Work Relevant to Litigation */}
@@ -29,13 +46,17 @@ export default function ResearchPage() {
           <p className="mt-2 text-sm leading-7 text-brand-ink/75">{site.researchPage.litigationRelevant.description}</p>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {litigationPapers.map((item) => (
-              <article key={item.title} className="subtle-card">
+              <article key={item.slug} className="subtle-card">
                 <p className="text-xs uppercase tracking-wide text-brand-ocean">{item.venue}</p>
-                <h3 className="mt-1 text-lg font-semibold">{item.title}</h3>
-                <p className="mt-2 text-sm leading-7 text-brand-ink/80">{item.summary}</p>
-                <a href={item.href} target="_blank" rel="noreferrer" className="secondary-btn mt-3">
-                  Read Paper
-                </a>
+                <h3 className="mt-1 text-lg font-semibold">
+                  <Link href={`/research/${item.slug}`} className="hover:text-brand-ocean">
+                    {item.title}
+                  </Link>
+                </h3>
+                <p className="mt-2 text-sm leading-7 text-brand-ink/80">{item.keyFinding}</p>
+                <Link href={`/research/${item.slug}`} className="secondary-btn mt-3">
+                  Read summary
+                </Link>
               </article>
             ))}
           </div>
@@ -73,30 +94,37 @@ export default function ResearchPage() {
           <h2 className="text-2xl">Publications &amp; Working Papers</h2>
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             {researchItems.map((item) => (
-              <article key={item.title} className="overflow-hidden rounded-xl border border-brand-ink/10 bg-white shadow-sm">
-                <div className="relative h-44 w-full">
-                  <Image
-                    src={item.image}
-                    alt={`Preview image for ${item.title}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+              <article key={item.slug} className="overflow-hidden rounded-xl border border-brand-ink/10 bg-white shadow-sm">
+                <Link href={`/research/${item.slug}`} className="block">
+                  <div className="relative h-44 w-full">
+                    <Image
+                      src={item.imagePath}
+                      alt={`Figure from ${item.title}`}
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                </Link>
                 <div className="p-6">
                   <p className="inline-flex rounded-full bg-brand-mist px-3 py-1 text-xs font-semibold tracking-wide text-brand-ocean">
                     {item.venue}
                   </p>
-                  <h3 className="mt-3 text-xl font-semibold leading-snug">{item.title}</h3>
+                  <h3 className="mt-3 text-xl font-semibold leading-snug">
+                    <Link href={`/research/${item.slug}`} className="hover:text-brand-ocean">
+                      {item.title}
+                    </Link>
+                  </h3>
                   <p className="mt-2 text-sm font-medium text-brand-ink/65">{item.year}</p>
-                  <p className="mt-3 text-sm leading-7 text-brand-ink/80">{item.summary}</p>
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="secondary-btn mt-5"
-                  >
-                    Read paper (PDF)
-                  </a>
+                  <p className="mt-3 text-sm leading-7 text-brand-ink/80">{item.keyFinding}</p>
+                  <div className="mt-5 flex flex-wrap gap-3">
+                    <Link href={`/research/${item.slug}`} className="secondary-btn">
+                      Abstract &amp; citation
+                    </Link>
+                    <a href={item.pdfPath} target="_blank" rel="noreferrer" className="secondary-btn">
+                      PDF
+                    </a>
+                  </div>
                 </div>
               </article>
             ))}
@@ -110,6 +138,22 @@ export default function ResearchPage() {
           </Link>
         </div>
       </div>
+
+      <JsonLd
+        schema={[
+          webPageSchema({
+            path: "/research",
+            name: pageSeo.research.title,
+            description: pageSeo.research.description,
+            type: "CollectionPage"
+          }),
+          researchListSchema(researchItems),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Research", path: "/research" }
+          ])
+        ]}
+      />
     </section>
   );
 }

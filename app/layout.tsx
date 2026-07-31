@@ -3,13 +3,17 @@ import "./globals.css";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { StickyMobileCta } from "@/components/sticky-mobile-cta";
-import { personSchema } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
+import { personSchema, websiteSchema } from "@/lib/seo";
 import { site } from "@/src/content/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.metadata.baseUrl),
   title: site.metadata.title,
   description: site.metadata.description,
+  authors: [{ name: "Jonathan Hersh", url: site.metadata.baseUrl }],
+  creator: "Jonathan Hersh",
+  publisher: "Jonathan Hersh",
   alternates: { canonical: "/" },
   openGraph: {
     title: site.metadata.title,
@@ -41,10 +45,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main className="pb-20 lg:pb-0">{children}</main>
         <StickyMobileCta />
         <Footer />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema()) }}
-        />
+        <JsonLd schema={[personSchema(), websiteSchema()]} />
       </body>
     </html>
   );

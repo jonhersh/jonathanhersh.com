@@ -1,18 +1,52 @@
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ContactForm } from "@/components/contact-form";
 import { FaqAccordion } from "@/components/faq-accordion";
-import { buildMetadata, professionalServiceSchema } from "@/lib/seo";
+import { JsonLd } from "@/components/json-ld";
+import {
+  breadcrumbSchema,
+  buildMetadata,
+  faqSchema,
+  professionalServiceSchema,
+  webPageSchema
+} from "@/lib/seo";
 import { pageSeo, site } from "@/src/content/site";
 
-export const metadata = buildMetadata(pageSeo.expertWitness.title, pageSeo.expertWitness.description, "/expert-witness");
+export const metadata = buildMetadata(
+  pageSeo.expertWitness.title,
+  pageSeo.expertWitness.description,
+  "/expert-witness",
+  {
+    keywords: [
+      "AI expert witness",
+      "expert witness economist",
+      "antitrust expert witness",
+      "platform economics expert witness",
+      "economic damages expert",
+      "API access litigation",
+      "algorithmic decision-making testimony"
+    ]
+  }
+);
 
 export default function ExpertWitnessPage() {
   return (
     <section className="section-space bg-[#ecebe8]/60">
       <div className="container-shell space-y-12">
+        <Breadcrumbs
+          trail={[
+            { name: "Home", path: "/" },
+            { name: "Expert Witness", path: "/expert-witness" }
+          ]}
+        />
+
         <header className="rounded-3xl border border-brand-ink/10 bg-white/85 px-8 py-12">
           <p className="text-sm uppercase tracking-[0.2em] text-brand-ocean">Jonathan Hersh, PhD</p>
           <h1 className="mt-2 text-4xl leading-tight md:text-6xl">{site.expertWitness.headline}</h1>
+          {/* Lead answer — direct definition sized for snippet/AI extraction. */}
+          <p className="mt-5 max-w-4xl border-l-4 border-brand-accent pl-5 text-lg font-medium leading-8 text-brand-ink">
+            {site.expertWitness.leadAnswer}
+          </p>
           <p className="mt-5 max-w-4xl text-lg leading-8 text-brand-ink/85">{site.expertWitness.body}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Link href="/contact" className="primary-btn">
@@ -26,7 +60,7 @@ export default function ExpertWitnessPage() {
 
         {/* Engagement Types */}
         <section className="rounded-3xl border border-brand-ink/10 bg-white/85 p-8 md:p-10">
-          <h2 className="text-3xl md:text-4xl">Engagement Types</h2>
+          <h2 className="text-3xl md:text-4xl">What engagement types are available?</h2>
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {site.expertWitness.engagementTypes.map((type) => (
               <article key={type.title} className="subtle-card">
@@ -39,7 +73,7 @@ export default function ExpertWitnessPage() {
 
         {/* Litigation Domains */}
         <section className="rounded-3xl border border-brand-ink/10 bg-[#d8d8d8]/40 p-8 md:p-10">
-          <h2 className="text-center text-4xl md:text-5xl">Litigation Domains</h2>
+          <h2 className="text-center text-4xl md:text-5xl">Which litigation domains are covered?</h2>
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             {site.expertWitness.expertiseCards.map((card) => (
               <article key={card.title} className="rounded-2xl border border-brand-ink/10 bg-white/85 p-8">
@@ -61,7 +95,7 @@ export default function ExpertWitnessPage() {
           </section>
 
           <section className="subtle-card">
-            <h2 className="text-2xl">Deliverables</h2>
+            <h2 className="text-2xl">What deliverables are provided?</h2>
             <ul className="mt-4 list-disc space-y-2 pl-5 text-brand-ink/85">
               {site.expertWitness.deliverables.map((item) => (
                 <li key={item}>{item}</li>
@@ -70,7 +104,7 @@ export default function ExpertWitnessPage() {
           </section>
 
           <section className="subtle-card">
-            <h2 className="text-2xl">Why Retain Me</h2>
+            <h2 className="text-2xl">Why retain Jonathan Hersh?</h2>
             <ul className="mt-4 list-disc space-y-2 pl-5 text-brand-ink/85">
               {site.expertWitness.whyMe.map((item) => (
                 <li key={item}>{item}</li>
@@ -79,12 +113,39 @@ export default function ExpertWitnessPage() {
           </section>
 
           <section className="subtle-card">
-            <h2 className="text-2xl">Engagement Process</h2>
+            <h2 className="text-2xl">How does the engagement process work?</h2>
             <ol className="mt-4 list-decimal space-y-2 pl-5 text-brand-ink/85">
               {site.expertWitness.process.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ol>
+          </section>
+
+          <section className="subtle-card">
+            <h2 className="text-2xl">What matters is he typically retained for?</h2>
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-brand-ink/85">
+              {site.expertWitness.retainedFor.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="subtle-card">
+            <h2 className="text-2xl">What are his qualifications?</h2>
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-brand-ink/85">
+              {site.expertWitness.qualifications.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="subtle-card">
+            <h2 className="text-2xl">What should I know before reaching out?</h2>
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-brand-ink/85">
+              {site.expertWitness.practicalInfo.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </section>
 
         </div>
@@ -106,11 +167,33 @@ export default function ExpertWitnessPage() {
             <ContactForm />
           </div>
         </section>
+        <p className="text-sm text-brand-ink/55">
+          Last reviewed:{" "}
+          <time dateTime={site.metadata.lastReviewed}>
+            {new Date(`${site.metadata.lastReviewed}T00:00:00Z`).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              timeZone: "UTC"
+            })}
+          </time>
+        </p>
       </div>
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceSchema()) }}
+      <JsonLd
+        schema={[
+          webPageSchema({
+            path: "/expert-witness",
+            name: pageSeo.expertWitness.title,
+            description: pageSeo.expertWitness.description
+          }),
+          professionalServiceSchema(),
+          faqSchema(site.expertWitness.faq, "/expert-witness"),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Expert Witness", path: "/expert-witness" }
+          ])
+        ]}
       />
     </section>
   );

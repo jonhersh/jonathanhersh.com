@@ -1,18 +1,11 @@
 export type NavItem = { label: string; href: string };
 
-type ResearchItem = {
-  title: string;
-  venue: string;
-  year: string;
-  href: string;
-  image: string;
-  summary: string;
-};
-
 type LogoItem = {
   name: string;
   src: string;
   alt: string;
+  width: number;
+  height: number;
 };
 
 type AudienceCard = {
@@ -32,9 +25,74 @@ export const site = {
     title: "Jonathan Hersh, PhD | Economist, AI & Labor",
     description:
       "Jonathan Hersh, PhD is a tenured economist and AI researcher offering expert witness services, economic analysis, and research on labor markets and technology.",
-    baseUrl: "https://jonathanhersh.com"
+    baseUrl: "https://jonathanhersh.com",
+    /** Bump when site content is materially reviewed. Feeds freshness signals. */
+    lastReviewed: "2026-07-31"
+  },
+  /**
+   * Entity facts used for Schema.org and llms.txt. Answer engines resolve a
+   * person by cross-referencing these; keep them accurate and specific.
+   */
+  entity: {
+    /**
+     * Authoritative profiles for the same person. This is how answer engines and
+     * Google's Knowledge Graph consolidate a personal entity — the more
+     * corroborating institutional and scholarly profiles are linked from one
+     * canonical hub, the more confidently the entity resolves.
+     */
+    sameAs: [
+      "https://www.chapman.edu/our-faculty/jonathan-hersh.aspx",
+      "https://scholar.google.com/citations?user=0aH3TXMAAAAJ",
+      "https://wol.iza.org/authors/jonathan-hersh",
+      "https://artificiallyoptimistic.substack.com",
+      "https://x.com/jonathanhersh"
+    ],
+    awards: [
+      "BBVA Foundation Award for Best Contribution from Statistics and Operations Research Using Data Science and Big Data (2023)"
+    ],
+    knowsAbout: [
+      "Economics",
+      "Artificial Intelligence",
+      "Labor Markets",
+      "Machine Learning",
+      "Causal Inference",
+      "Econometrics",
+      "Expert Witness Testimony",
+      "Platform Economics",
+      "API Strategy",
+      "Antitrust Economics",
+      "Economic Damages Analysis",
+      "Computer Vision",
+      "Satellite Imagery Analysis",
+      "Future of Work",
+      "Technology Policy"
+    ],
+    notableCoverage: [
+      {
+        outlet: "NPR (KUOW)",
+        title: "Research finds how AI will impact demographics differently",
+        url: "https://www.kuow.org/stories/research-finds-how-ai-will-impact-demographics-differently"
+      }
+    ],
+    /**
+     * Compact, extractable credential table. Tables are among the highest-value
+     * formats for AI answer extraction.
+     */
+    quickFacts: [
+      { label: "Role", value: "Associate Professor of Economics & Management Science (tenured)" },
+      { label: "Institution", value: "Argyros School of Business and Economics, Chapman University" },
+      { label: "PhD", value: "Economics, Boston University" },
+      { label: "Prior degrees", value: "University of Chicago; The Wharton School, University of Pennsylvania" },
+      { label: "Published in", value: "Management Science, PNAS, MIS Quarterly, NeurIPS, World Bank Economic Review, Communications of the ACM" },
+      { label: "Award", value: "2023 BBVA Foundation Award for Data Science and Big Data" },
+      { label: "Industry experience", value: "Machine learning scientist at Workhelix; data scientist at the World Bank and Inter-American Development Bank" },
+      { label: "Previously taught at", value: "MIT and Wellesley College" },
+      { label: "Expert witness focus", value: "AI systems, antitrust in digital markets, platform and API economics, economic damages" },
+      { label: "Initial case assessment", value: "Typically 3–5 business days" }
+    ]
   },
   navItems: [
+    { label: "About", href: "/about" },
     { label: "Research", href: "/research" },
     { label: "Media", href: "/media" },
     { label: "Expert Witness", href: "/expert-witness" },
@@ -66,17 +124,21 @@ export const site = {
   },
   logoRow: {
     heading: "Published In & Featured By",
+    /**
+     * Logos render at a fixed height with auto width, so a wrong declared ratio
+     * reflows the whole row as each one loads. These are the true intrinsic sizes.
+     */
     items: [
-      { name: "Management Science", src: "/logos/management-science.jpg", alt: "Management Science" },
-      { name: "PNAS", src: "/logos/pnas.jpg", alt: "Proceedings of the National Academy of Sciences" },
-      { name: "MIS Quarterly", src: "/logos/mis-quarterly.png", alt: "MIS Quarterly" },
-      { name: "NeurIPS", src: "/logos/neurips.svg", alt: "NeurIPS" },
-      { name: "World Bank", src: "/logos/world-bank.jpg", alt: "World Bank" },
-      { name: "MIT", src: "/logos/mit.png", alt: "MIT" },
-      { name: "Wharton", src: "/logos/wharton.png", alt: "Wharton School" },
-      { name: "University of Chicago", src: "/logos/uchicago.png", alt: "University of Chicago" },
-      { name: "Boston University", src: "/logos/boston-university.png", alt: "Boston University" },
-      { name: "Chapman University", src: "/logos/chapman.gif", alt: "Chapman University" }
+      { name: "Management Science", src: "/logos/management-science.webp", alt: "Management Science", width: 320, height: 133 },
+      { name: "PNAS", src: "/logos/pnas.webp", alt: "Proceedings of the National Academy of Sciences", width: 320, height: 168 },
+      { name: "MIS Quarterly", src: "/logos/mis-quarterly.webp", alt: "MIS Quarterly", width: 320, height: 123 },
+      { name: "NeurIPS", src: "/logos/neurips.svg", alt: "NeurIPS", width: 471, height: 212 },
+      { name: "World Bank", src: "/logos/world-bank.webp", alt: "World Bank", width: 320, height: 179 },
+      { name: "MIT", src: "/logos/mit.webp", alt: "MIT", width: 320, height: 257 },
+      { name: "Wharton", src: "/logos/wharton.webp", alt: "Wharton School", width: 300, height: 300 },
+      { name: "University of Chicago", src: "/logos/uchicago.webp", alt: "University of Chicago", width: 225, height: 225 },
+      { name: "Boston University", src: "/logos/boston-university.webp", alt: "Boston University", width: 320, height: 180 },
+      { name: "Chapman University", src: "/logos/chapman.webp", alt: "Chapman University", width: 234, height: 234 }
     ] as LogoItem[]
   },
   bios: {
@@ -128,7 +190,49 @@ export const site = {
       body: "My work and commentary have been featured by major media outlets, including NPR, where I\u2019ve discussed how AI is changing work and economic opportunity.",
       ctaLabel: "Media Appearances",
       ctaHref: "/media"
-    }
+    },
+    /**
+     * Lead answer block. Answers "Who is Jonathan Hersh?" in the first ~55 words
+     * so it can be lifted whole into an AI Overview or assistant response.
+     */
+    summary:
+      "Jonathan Hersh, PhD is a tenured Associate Professor of Economics and Management Science at Chapman University\u2019s Argyros School of Business and Economics, and an expert witness in technology litigation. He researches how artificial intelligence reshapes labor markets, productivity, and platform competition, and has published in Management Science, PNAS, MIS Quarterly, and NeurIPS.",
+    /**
+     * Entity-establishing FAQ. These mirror the questions people actually ask
+     * assistants about a named expert, and are marked up as FAQPage.
+     */
+    faq: [
+      {
+        question: "Who is Jonathan Hersh?",
+        answer:
+          "Jonathan Hersh is a tenured Associate Professor of Economics and Management Science at Chapman University\u2019s Argyros School of Business and Economics. He is an economist and machine learning scientist who studies how artificial intelligence changes work, productivity, and market competition. He also serves as an expert witness in litigation involving AI systems, digital platforms, and technology-driven economic damages."
+      },
+      {
+        question: "What does Jonathan Hersh research?",
+        answer:
+          "His research covers AI adoption and worker productivity, labor market adjustment to new technologies, platform and API economics, and economic measurement using machine learning and computer vision. He applies machine learning to unstructured data such as text, images, and satellite imagery to build predictive and causal models for settings where conventional data is scarce."
+      },
+      {
+        question: "Where has Jonathan Hersh\u2019s research been published?",
+        answer:
+          "His work has appeared in Management Science, the Proceedings of the National Academy of Sciences (PNAS), MIS Quarterly, NeurIPS, the World Bank Economic Review, the Journal of Economic Behavior & Organization, Communications of the ACM, and Explorations in Economic History. In 2023 he received the BBVA Foundation Award for Best Contribution from Statistics and Operations Research Using Data Science and Big Data."
+      },
+      {
+        question: "Is Jonathan Hersh available as an expert witness?",
+        answer:
+          "Yes. He is retained in disputes involving AI and algorithmic decision-making, antitrust and competition in digital markets, platform conduct and API access restrictions, and economic damages in technology cases. Engagements include expert reports, depositions, and trial testimony. A confidentiality and conflicts review is completed at intake, and initial assessments are typically scoped within 3\u20135 business days."
+      },
+      {
+        question: "What are Jonathan Hersh\u2019s credentials?",
+        answer:
+          "He holds a PhD in Economics from Boston University, with prior degrees from the University of Chicago and the Wharton School at the University of Pennsylvania. He has worked as a machine learning scientist at Workhelix and as a data scientist for the World Bank and the Inter-American Development Bank, and has taught at MIT and Wellesley College in addition to Chapman University."
+      },
+      {
+        question: "How do I contact Jonathan Hersh for media or consulting?",
+        answer:
+          "Email hello@jonathanhersh.com or use the contact form on this site. He is available for interviews, background conversations, and rapid-response commentary on AI and labor markets, and for expert witness and consulting engagements. Press materials, bios, and headshots are available on the media page."
+      }
+    ]
   },
   researchPage: {
     description:
@@ -150,11 +254,12 @@ export const site = {
       heading: "Selected Work Relevant to Litigation",
       description:
         "These publications are particularly relevant to expert witness matters involving platform economics, website blocking damages, AI performance evaluation, and technology-driven market dynamics.",
-      paperKeys: [
-        "How APIs Create Growth by Inverting the Firm",
-        "The Effect of Piracy Website Blocking on Consumer Behavior",
-        "From Bootleg to Binge: User Migration and Legal Demand Following Brazil\u2019s MegafilmesHD Shutdown",
-        "Fighting Crime Online: Options, evidence, and the empirical case for judicial site blocking in the U.S."
+      /** Slugs from src/content/research.ts \u2014 more robust than matching on title strings. */
+      paperSlugs: [
+        "how-apis-create-growth-inverting-the-firm",
+        "piracy-website-blocking-consumer-behavior",
+        "bootleg-to-binge-megafilmeshd-shutdown",
+        "fighting-crime-online-judicial-site-blocking"
       ]
     },
     mediaReadySummaries: {
@@ -186,56 +291,84 @@ export const site = {
       ]
     }
   },
-  expertisePage: {
-    intro:
-      "I work at the intersection of economics, artificial intelligence, and applied data science. My background spans academic research, industry data science, and consulting. This allows me to translate rigorous methods into clear, defensible insights for courts, firms, and policymakers.",
-    sections: [
-      {
-        title: "AI Strategy and Societal Impacts",
-        description:
-          "Economic analysis of how AI reshapes labor demand, productivity, competitive dynamics, and long-run institutional outcomes."
-      },
-      {
-        title: "Human-AI Collaboration & Decision Support",
-        description:
-          "Study of how people and organizations use AI systems in real decisions, including performance effects, incentives, and governance."
-      },
-      {
-        title: "Platform Economics",
-        description:
-          "Research on digital platforms, network effects, market structure, and policy-relevant outcomes in technology-mediated markets."
-      },
-      {
-        title: "API and Technology Strategy",
-        description:
-          "Evidence-based analysis of API ecosystems, software usage metrics, product strategy, and the economics of technology adoption."
-      },
-      {
-        title: "AI for Social Good & Development",
-        description:
-          "Applied machine learning and economic measurement for development, poverty mapping, and public-interest technology initiatives."
-      }
-    ]
-  },
   aboutPage: {
-    title: "About",
+    title: "About Jonathan Hersh",
+    /** Direct-answer block (~55 words) sized for featured-snippet extraction. */
+    leadAnswer:
+      "Jonathan Hersh, PhD is a tenured Associate Professor of Economics and Management Science at Chapman University\u2019s Argyros School of Business and Economics. He is an economist and machine learning scientist studying how artificial intelligence reshapes work, productivity, and market competition, and serves as an expert witness in technology litigation.",
     intro:
       "I\u2019m an economist and AI researcher focused on how technology changes work, firm behavior, and economic opportunity. My work spans academic research, industry data science, and public-facing analysis.",
-    overview:
-      "If you\u2019re new here, start on the homepage for a full overview, then explore research, media, and expert witness services in detail.",
     highlights: [
       "Tenured Associate Professor of Economics & Management Science",
       "Research at the frontier of AI, labor markets, and platform economics",
       "Applied work on APIs, technology strategy, and data-driven decision systems",
       "Published scholarship across economics, management, and machine learning venues"
     ],
-    startCta: {
-      label: "Go to Site Start",
-      href: "/#top"
-    }
+    education: [
+      { credential: "PhD, Economics", institution: "Boston University" },
+      { credential: "Graduate study", institution: "University of Chicago" },
+      { credential: "Undergraduate study", institution: "The Wharton School, University of Pennsylvania" }
+    ],
+    appointments: [
+      {
+        role: "Associate Professor of Economics & Management Science",
+        org: "Argyros School of Business and Economics, Chapman University",
+        detail: "Tenured faculty. Teaches machine learning and data science to undergraduate and MBA students."
+      },
+      {
+        role: "Machine Learning Scientist",
+        org: "Workhelix",
+        detail: "Series A startup focused on AI workforce strategy."
+      },
+      {
+        role: "Data Scientist",
+        org: "The World Bank",
+        detail: "Applied machine learning and economic measurement for development programs."
+      },
+      {
+        role: "Data Scientist",
+        org: "Inter-American Development Bank",
+        detail: "Economic measurement and predictive modeling in data-scarce environments."
+      },
+      {
+        role: "Previously taught at",
+        org: "MIT and Wellesley College",
+        detail: "Economics and applied data science instruction."
+      }
+    ],
+    recognition: [
+      "2023 BBVA Foundation Award for Best Contribution from Statistics and Operations Research Using Data Science and Big Data, for work using AI to estimate war-related infrastructure damage",
+      "Peer-reviewed publications in Management Science, PNAS, MIS Quarterly, and NeurIPS",
+      "Research and commentary featured on NPR\u2019s Weekend Edition, Bloomberg, and The Economist"
+    ],
+    faq: [
+      {
+        question: "Where did Jonathan Hersh study?",
+        answer:
+          "He holds a PhD in Economics from Boston University. He also studied at the University of Chicago and at the Wharton School of the University of Pennsylvania."
+      },
+      {
+        question: "Where does Jonathan Hersh teach?",
+        answer:
+          "He is a tenured Associate Professor of Economics and Management Science at the Argyros School of Business and Economics at Chapman University in Orange, California, where he teaches machine learning and data science to undergraduate and MBA students. He previously taught at MIT and Wellesley College."
+      },
+      {
+        question: "What awards has Jonathan Hersh received?",
+        answer:
+          "In 2023 he received the BBVA Foundation Award for Best Contribution from Statistics and Operations Research Using Data Science and Big Data, recognizing his work using machine learning and satellite imagery to estimate war-related infrastructure damage. That research was published in the Proceedings of the National Academy of Sciences."
+      },
+      {
+        question: "What industry experience does Jonathan Hersh have?",
+        answer:
+          "He has worked as a machine learning scientist at Workhelix, a Series A startup focused on AI workforce strategy, and as a data scientist for the World Bank and the Inter-American Development Bank. This applied work informs his expert witness practice, where technical questions about models and data are often central."
+      }
+    ]
   },
   expertWitness: {
     headline: "AI Expert Witness & Economic Consulting",
+    /** Direct-answer block (~55 words) sized for featured-snippet extraction. */
+    leadAnswer:
+      "An AI expert witness economist analyzes and testifies about how algorithms, data, and market structure produce economic harm in litigation. Jonathan Hersh, PhD is a tenured economics professor retained in disputes over AI systems, platform conduct, API access restrictions, and antitrust claims in digital markets — providing expert reports, depositions, and trial testimony.",
     body: "I provide expert analysis and testimony in complex litigation involving artificial intelligence, digital platforms, and technology-driven economic harm. My work focuses on matters where legal outcomes depend on a clear, rigorous understanding of algorithms, data, market structure, and economic impact. I am frequently retained in disputes involving AI systems, platform conduct, API access, and alleged anticompetitive or exclusionary behavior, with an emphasis on methodological rigor, transparency, and clarity under adversarial scrutiny.",
     areasOfTestimony: [
       "AI and algorithmic decision-making",
@@ -366,7 +499,7 @@ export const site = {
         href: "https://www.kuow.org/stories/research-finds-how-ai-will-impact-demographics-differently",
         ctaLabel: "Listen to Segment",
         date: "April 5, 2025",
-        image: "/media/headshot.jpg",
+        image: "/media/headshot.webp",
         description:
           "Interview on how AI exposure differs across workers, why regional labor impacts vary, and what policymakers should monitor as adoption accelerates.",
         tags: ["AI", "Labor Markets", "Economic Opportunity"]
@@ -378,7 +511,7 @@ export const site = {
         href: "/contact",
         ctaLabel: "Inquire About Speaking",
         date: "Speaking Session \u00b7 60 minutes",
-        image: "/media/speaking-stage.jpg",
+        image: "/media/speaking-stage.webp",
         description:
           "A panel of Chapman University experts discussing how AI is reshaping labor demand in Southern California, which jobs are most affected, and how workers and firms can prepare for the rapidly changing future of work.",
         tags: ["AI", "Artificial Intelligence", "Future of Work", "Automation"]
@@ -392,10 +525,11 @@ export const site = {
       "AI workforce strategy and firm-level adoption decisions",
       "Digital piracy, site blocking, and consumer behavior shifts"
     ],
+    /** Dimensions are the sources' true intrinsic sizes — a mismatch causes layout shift. */
     headshots: [
-      { label: "Professional headshot", src: "/media/headshot.jpg" },
-      { label: "Teaching / speaking", src: "/media/headshot-teaching.jpg" },
-      { label: "On stage", src: "/media/speaking-stage.jpg" }
+      { label: "Professional headshot", src: "/media/headshot.webp", width: 1080, height: 1616 },
+      { label: "Teaching / speaking", src: "/media/headshot-teaching.webp", width: 1400, height: 933 },
+      { label: "On stage", src: "/media/speaking-stage.webp", width: 1280, height: 720 }
     ],
     selectedQuotes: [
       {
@@ -441,8 +575,19 @@ export const site = {
     ]
   },
   blogPage: {
+    newsletterName: "Artificially Optimistic",
+    /** Direct-answer block sized for extraction. */
+    leadAnswer:
+      "Artificially Optimistic is a newsletter by Jonathan Hersh, PhD, an economist and machine learning scientist at Chapman University. It covers how artificial intelligence is changing work, which jobs and tasks are most exposed, and what the economic evidence actually shows — written for readers who want analysis rather than hype.",
     intro:
       "AI will make the world better. Getting there will be messy. An economist and machine learning scientist writing honestly about work, displacement, and the human side of the AI economy.",
+    topics: [
+      "How AI adoption reallocates tasks within jobs, and which roles absorb the change",
+      "What productivity studies do and do not establish about AI at work",
+      "Platform and API economics, and why access disputes keep reaching courts",
+      "Labor market evidence on who gains and who is displaced",
+      "Practical guidance for workers and firms adapting to AI"
+    ],
     featuredPosts: [
       {
         title: "AI and Labor Market Reallocation",
@@ -452,6 +597,7 @@ export const site = {
   },
   bookPage: {
     title: "AI Proof Jobs",
+    fullTitle: "AI-Proof Jobs: Future-Proof Your Career with Skills AI Can’t Replace",
     intro:
       "I\u2019m currently working on a book focused on how artificial intelligence is transforming work\u2014and what workers, firms, and policymakers can do to adapt. The book draws on economic research, real-world case studies, and hands-on experience working with AI systems in practice.",
     toc: [
@@ -464,126 +610,10 @@ export const site = {
   contactPage: {
     intro:
       "For expert witness matters, consulting, media inquiries, or academic collaboration, please get in touch. Conflicts check available upon request."
-  },
-  selectedResearch: [
-    {
-      title:
-        "Poverty Mapping Using Convolutional Neural Networks Trained on High and Medium Resolution Satellite Images, With an Application in Mexico",
-      venue: "NeurIPS 2017 ML for the Developing World Workshop",
-      year: "2017",
-      href: "/research/2017_poverty_mapping_using_CNNs_Mexico.pdf",
-      image: "/research/2017_poverty_mapping_using_CNNs_Mexico_image.png",
-      summary:
-        "Demonstrates how CNN models trained on satellite imagery can estimate poverty distribution with meaningful predictive power in low-data settings."
-    },
-    {
-      title: "Big Data in Economics",
-      venue: "IZA World of Labor",
-      year: "2018",
-      href: "/research/2018_big_data_in_economics.pdf",
-      image: "/research/2018_big_data_in_economics_image.png",
-      summary:
-        "Explains how high-frequency, high-volume data and machine learning methods are transforming empirical economics and policy design."
-    },
-    {
-      title: "The Effect of Piracy Website Blocking on Consumer Behavior",
-      venue: "MIS Quarterly",
-      year: "2020",
-      href: "/research/2020_effect_of_piracy_website_blocking_UK.pdf",
-      image: "/research/2020_effect_of_piracy_website_blocking_UK_image.png",
-      summary:
-        "Finds that coordinated blocking of multiple piracy sites can meaningfully shift behavior toward legal consumption channels."
-    },
-    {
-      title: "Monitoring war destruction from space using machine learning",
-      venue: "Proceedings of the National Academy of Sciences",
-      year: "2021",
-      href: "/research/2021_monitoring_destruction_space-compressed.pdf",
-      image: "/research/2021_monitoring_destruction_space-compressed_image.png",
-      summary:
-        "Develops machine-learning methods to detect conflict-related infrastructure destruction at scale from satellite imagery."
-    },
-    {
-      title:
-        "Open data for algorithms: mapping poverty in Belize using open satellite derived features and machine learning",
-      venue: "Information Technology for Development",
-      year: "2021",
-      href: "/research/2021_open_data_algorithms_mapping_poverty_belize_sat_ML.pdf",
-      image: "/research/2021_open_data_algorithms_mapping_poverty_belize_sat_ML_image.png",
-      summary:
-        "Shows that open satellite feature sets can improve poverty prediction performance and reduce cost barriers for policy analytics."
-    },
-    {
-      title: "Poverty from Space: Using High Resolution Satellite Imagery for Estimating Economic Well-being",
-      venue: "World Bank Economic Review",
-      year: "2022",
-      href: "/research/2021_poverty_from_space_sri_lanka.pdf",
-      image: "/research/2021_poverty_from_space_sri_lanka_image.png",
-      summary:
-        "Uses high-resolution imagery to estimate consumption and poverty with robust out-of-sample performance."
-    },
-    {
-      title: "Car accidents, smartphone adoption and 3G coverage",
-      venue: "Journal of Economic Behavior & Organization",
-      year: "2022",
-      href: "/research/2022_car_accidents_cell_phones.pdf",
-      image: "/research/2022_car_accidents_cell_phones_image.png",
-      summary:
-        "Links smartphone diffusion and network coverage to measurable increases in accident risk, with policy implications for road safety."
-    },
-    {
-      title: "How APIs Create Growth by Inverting the Firm",
-      venue: "Management Science",
-      year: "2022",
-      href: "/research/2022_how_APIs_create_growth_inverting_firm.pdf",
-      image: "/research/2022_how_APIs_create_growth_inverting_firm_image.png",
-      summary:
-        "Documents growth gains from API adoption and platform openness, while quantifying associated governance and security tradeoffs."
-    },
-    {
-      title: "Hybrid U-Net: Semantic segmentation of high-resolution satellite images to detect war destruction",
-      venue: "Machine Learning with Applications",
-      year: "2022",
-      href: "/research/2022_hybrid_UNET_semantic_segmentation_satellite_war_destruction.pdf",
-      image: "/research/2022_hybrid_UNET_semantic_segmentation_satellite_war_destruction_image.png",
-      summary:
-        "Introduces a multi-scale segmentation architecture that improves detection of conflict damage in high-resolution satellite images."
-    },
-    {
-      title: "Sweet diversity: Colonial goods and the welfare gains from global trade after 1492",
-      venue: "Explorations in Economic History",
-      year: "2023",
-      href: "/research/2022_sweet_diversity_colonial_goods_and_welfare_gains_global_trade.pdf",
-      image: "/research/2022_sweet_diversity_colonial_goods_and_welfare_gains_global_trade_image.png",
-      summary:
-        "Estimates large historical welfare gains from imported consumption variety and changing food baskets in Europe."
-    },
-    {
-      title:
-        "Fighting Crime Online: Options, evidence, and the empirical case for judicial site blocking in the U.S.",
-      venue: "Communications of the ACM",
-      year: "2025",
-      href: "/research/2025_FightingCrime_Smith_V03.pdf",
-      image: "/research/2025_FightingCrime_Smith_V03_image.png",
-      summary:
-        "Synthesizes evidence on judicial site blocking as a policy lever for reducing online criminal activity."
-    },
-    {
-      title:
-        "From Bootleg to Binge: User Migration and Legal Demand Following Brazil\u2019s MegafilmesHD Shutdown",
-      venue: "Review of Economic Research on Copyright Issues",
-      year: "2025",
-      href: "/research/2025_megafilmes-shutdown-RERCI.pdf",
-      image: "/research/2025_megafilmes-shutdown-RERCI_image.png",
-      summary:
-        "Analyzes substitution between piracy and legal streaming after platform shutdown, with heterogeneous adoption effects by income."
-    }
-  ] as ResearchItem[]
+  }
+
 } as const;
 
-export function selectedResearchByNewest() {
-  return [...site.selectedResearch].sort((a, b) => Number(b.year) - Number(a.year));
-}
 
 export const pageSeo = {
   home: {
@@ -597,14 +627,9 @@ export const pageSeo = {
       "Peer-reviewed research on AI, labor markets, platform economics, and applied machine learning. Published in Management Science, PNAS, NeurIPS, and MIS Quarterly."
   },
   about: {
-    title: "Jonathan Hersh, PhD | About",
+    title: "About Jonathan Hersh, PhD | Economist & AI Researcher",
     description:
-      "Overview of Jonathan Hersh, PhD: economist, AI researcher, and expert witness focused on labor, platforms, APIs, and technology strategy."
-  },
-  expertise: {
-    title: "Jonathan Hersh, PhD | About",
-    description:
-      "Overview of Jonathan Hersh, PhD: economist, AI researcher, and expert witness focused on labor, platforms, APIs, and technology strategy."
+      "Jonathan Hersh, PhD is a tenured Associate Professor of Economics and Management Science at Chapman University. Biography, education, appointments, awards, and research areas."
   },
   expertWitness: {
     title: "AI Expert Witness Economist | Jonathan Hersh, PhD",
