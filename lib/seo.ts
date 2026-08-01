@@ -90,6 +90,14 @@ export function personSchema() {
     mainEntityOfPage: site.metadata.baseUrl,
     image: `${site.metadata.baseUrl}/media/headshot.jpg`,
     sameAs: site.entity.sameAs,
+    // ORCID appears in sameAs too, but a typed PropertyValue states *which*
+    // authority file the identifier belongs to rather than leaving consumers to
+    // infer it from the URL. This is the form Google and scholarly indexes read.
+    identifier: {
+      "@type": "PropertyValue",
+      propertyID: "ORCID",
+      value: "https://orcid.org/0000-0001-6786-5162"
+    },
     email: `mailto:${site.social.email}`,
     jobTitle: "Associate Professor of Economics & Management Science",
     description: site.bios.short,

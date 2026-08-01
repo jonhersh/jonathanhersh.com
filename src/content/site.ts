@@ -42,6 +42,10 @@ export const site = {
      */
     sameAs: [
       "https://www.chapman.edu/our-faculty/jonathan-hersh.aspx",
+      // ORCID is the canonical author identifier for researchers; answer engines
+      // and Wikidata both treat it as an authority file, so it leads the
+      // scholarly profiles here.
+      "https://orcid.org/0000-0001-6786-5162",
       "https://scholar.google.com/citations?user=0aH3TXMAAAAJ",
       "https://wol.iza.org/authors/jonathan-hersh",
       "https://artificiallyoptimistic.substack.com",
