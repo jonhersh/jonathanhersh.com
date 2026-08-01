@@ -240,18 +240,31 @@ export const papers: Paper[] = [
     pdfPath: "/research/2025_megafilmes-shutdown-RERCI.pdf",
     imagePath: "/research/2025_megafilmes-shutdown-RERCI_image.webp"
   },
+  // Exception to the author-prose rule above: this is a CACM Opinion column, which
+  // carries no formal abstract. The opening paragraph is the article's own summary
+  // passage, near-verbatim; the sections below condense the argument and reproduce
+  // the six principles in the authors' framing. Replace if CACM publishes a précis.
   {
     slug: "fighting-crime-online-judicial-site-blocking",
     title: "Fighting Crime Online: Options, evidence, and the empirical case for judicial site blocking in the U.S.",
     venue: "Communications of the ACM",
     year: "2025",
-    datePublished: "2025",
+    datePublished: "2025-07-01",
     authors: ["Brett Danaher", "Jonathan Hersh", "Michael D. Smith", "Rahul Telang"],
-    keyFinding: "Synthesizes evidence on judicial site blocking as a policy lever for reducing online criminal activity.",
+    keyFinding: "Argues that judicial website blocking — already used by Canada, the U.K., much of the E.U., Australia, Brazil, India, and South Korea — is the supply-side enforcement tool best suited to reducing online crime, because it requires neither arrests nor server seizures in foreign jurisdictions.",
     abstract: [
-      { type: "p", text: "An overview of policy options and evidence on judicial site blocking in the U.S., arguing for its effectiveness as a tool to reduce online crime." },
+      { type: "p", text: "The Internet has been a transformative technology, but digital platforms — and the decentralization they facilitate — have also allowed illegal activities to flourish online, from prostitution and sex trafficking to dark-web drug marketplaces and the illegal exchange of copyrighted media. Here, we discuss the empirical evidence on the effectiveness of various methods of enforcement against criminal behavior on the Internet, synthesizing results from several distinct categories of crime. We then discuss why some methods are more effective than others in reducing illegal activities. We conclude by arguing that judicial website blocking, a method deployed in numerous stable, rights-respecting democracies worldwide, has been shown to have several desirable properties in fighting online criminal activities, and within the bounds of a carefully crafted framework we outline here, could be used safely and effectively in the U.S. as well." },
+      { type: "h", text: "Why Other Enforcement Methods Fall Short" },
+      { type: "p", text: "Enforcement divides into demand-side measures, which reduce consumers’ motivation to consume illegal content, and supply-side measures, which reduce their ability to do so. Demand-side enforcement can work, but its effect wanes as enforcement grows lax, it is expensive to apply across a large user base, and it is politically unpopular when viewed as invasive. Supply-side enforcement takes four main approaches, three of which face serious limits:" },
+      { type: "ul", items: ["Site shutdowns require months of coordination across multiple countries and are vulnerable to the “hydra effect,” in which traffic disperses to substitute sites faster than those sites can be shut down. The shutdowns of the Silk Road, Backpage, and Kino.tv each produced little or no lasting change in behavior.", "Increased legal liability, as under FOSTA-SESTA, led many commercial sex advertising platforms to police their sites more actively — but reaches only sites located domestically.", "Notice and takedown works where it applies: books given targeted copyright protection saw a 14% increase in sales relative to control titles. It too has no purchase on foreign sites or international search engines."] },
+      { type: "h", text: "The Case for Website Blocking" },
+      { type: "p", text: "With website blocking, legal authorities direct Internet service providers not to resolve the domain names of infringing sites. Because it requires neither the arrest of individuals nor the seizure of servers located abroad, it scales to many international sites in a way the other three approaches cannot. Blocking a single site does little — the block of The Pirate Bay was absorbed by the hydra effect — but several studies show that blocking multiple sites simultaneously reduces total piracy and increases legal consumption. The threat of blocking may also give platforms their own incentive to police illegal activity." },
+      { type: "h", text: "A Six-Principle Framework" },
+      { type: "p", text: "Website blocking should not be taken lightly: it raises procedural and free-speech concerns that were major reasons SOPA-PIPA did not pass Congress in 2012. The rights-respecting democracies that have since enacted judicial site blocking generally follow six principles, which we believe form a useful framework for other democratic countries considering such legislation:" },
+      { type: "ul", items: ["Lawful: blocking is administered by a court, or an administrative authority overseen by the court, after careful judicial review.", "Targeted: blocks are limited to foreign-run sites that are structurally infringing or whose primary purpose or effect is facilitating illicit activity — not sites hosting only some infringing content.", "Proportional: the demonstrated harm potential of the site is balanced against impacts on free speech and lawful commerce, and against the overhead imposed on ISPs.", "Transparent: site owners are notified and given an opportunity to oppose the order; users reaching a blocked site are shown the reason and judicial authority behind the block; decisions are available for public review.", "Limited: sites that are no longer structurally infringing have a route to removal from blocking.", "Flexible: ISPs are given latitude in the technical measures they use, as long as implementation is sufficiently effective."] },
+      { type: "p", text: "The U.S. is notably absent from the list of rights-respecting democracies that have adopted judicial website blocking. But in March 2025, Representatives Darrell Issa and Zoe Lofgren — two legislators who strongly opposed SOPA-PIPA in 2012 — introduced legislation and organized industry roundtables toward enacting it. Given the increasing harms associated with illicit activity facilitated online, the limitations of existing demand- and supply-side measures, and the empirical evidence of blocking’s effectiveness, we believe now is the right time for U.S. legislators to give it serious consideration." },
     ],
-    publisherUrl: "https://www.sciencedirect.com/science/article/pii/S0014498322000468",
+    publisherUrl: "https://dl.acm.org/doi/10.1145/3722549",
     pdfPath: "/research/2025_FightingCrime_Smith_V03.pdf",
     imagePath: "/research/2025_FightingCrime_Smith_V03_image.webp"
   },

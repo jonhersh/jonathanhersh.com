@@ -1,0 +1,41 @@
+name: Deploy to Cloudflare
+
+# Pushes to main build the static export and ship it. Before this existed the
+# site was deployed by running `npx wrangler deploy` by hand, so a push could
+# (and did) leave production months behind the repo.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Never let two deploys race; a queued one supersedes the one waiting.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # Fail loudly here rather than deploying an empty directory, which
+      # Cloudflare would happily accept and serve as a blank site.
+      - name: Verify the export produced pages
+        run: test -f out/index.html && test -f out/research/index.html
+
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy

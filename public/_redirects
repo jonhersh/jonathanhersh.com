@@ -1,1 +1,8 @@
 /expertise / 301
+
+# The CV is a single PDF at /cv.pdf, but it gets linked and typed as a page path.
+# Splat covers /cv/anything, which older WordPress-style URLs sometimes carried.
+/cv /cv.pdf 301
+/cv/ /cv.pdf 301
+/cv/* /cv.pdf 301
+
