@@ -41,6 +41,21 @@ export function ContactForm() {
         />
       </label>
 
+      {/* Honeypot. Formspree discards any submission where `_gotcha` is filled.
+          Bots complete every field they find; humans never see this one. Hidden
+          with inline styles rather than a utility class so it stays hidden even
+          if the stylesheet fails to load — a visible honeypot would silently
+          drop real inquiries. aria-hidden and tabIndex keep screen readers and
+          keyboard navigation away from it. */}
+      <input
+        type="text"
+        name="_gotcha"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+      />
+
       <button type="submit" className="primary-btn">
         Send Inquiry
       </button>

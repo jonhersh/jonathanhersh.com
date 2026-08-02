@@ -113,7 +113,7 @@ export const site = {
   social: {
     substack: "https://artificiallyoptimistic.substack.com",
     x: "https://x.com/jonathanhersh",
-    email: "hello@jonathanhersh.com"
+    email: "hersh@chapman.edu"
   },
   hero: {
     title: "Jonathan Hersh, PhD",
@@ -240,7 +240,7 @@ export const site = {
       {
         question: "How do I contact Jonathan Hersh for media or consulting?",
         answer:
-          "Email hello@jonathanhersh.com or use the contact form on this site. He is available for interviews, background conversations, and rapid-response commentary on AI and labor markets, and for expert witness and consulting engagements. Press materials, bios, and headshots are available on the media page."
+          "Email hersh@chapman.edu or use the contact form on this site. He is available for interviews, background conversations, and rapid-response commentary on AI and labor markets, and for expert witness and consulting engagements. Press materials, bios, and headshots are available on the media page."
       }
     ]
   },
