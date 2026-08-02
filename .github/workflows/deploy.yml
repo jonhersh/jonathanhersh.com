@@ -30,9 +30,18 @@ jobs:
       - run: npm run build
 
       # Fail loudly here rather than deploying an empty directory, which
-      # Cloudflare would happily accept and serve as a blank site.
+      # Cloudflare would happily accept and serve as a blank site. Next's
+      # static export writes route pages as `<route>.html` (no trailingSlash),
+      # so the research listing is out/research.html — not research/index.html.
       - name: Verify the export produced pages
-        run: test -f out/index.html && test -f out/research/index.html
+        run: |
+          set -euo pipefail
+          for f in out/index.html out/research.html out/about.html out/llms.txt out/sitemap.xml; do
+            [ -s "$f" ] || { echo "::error::missing or empty: $f"; exit 1; }
+          done
+          papers=$(find out/research -name '*.html' | wc -l)
+          echo "paper pages: $papers"
+          [ "$papers" -ge 12 ] || { echo "::error::expected >=12 paper pages, got $papers"; exit 1; }
 
       - uses: cloudflare/wrangler-action@v3
         with:
