@@ -42,6 +42,10 @@ export const site = {
      */
     sameAs: [
       "https://www.chapman.edu/our-faculty/jonathan-hersh.aspx",
+      // Wikidata Q140817644. The reciprocal link matters: Wikidata's P856
+      // points here, and this points back, which is how Google confirms the
+      // item and the site describe the same entity rather than guessing.
+      "https://www.wikidata.org/wiki/Q140817644",
       // ORCID is the canonical author identifier for researchers; answer engines
       // and Wikidata both treat it as an authority file, so it leads the
       // scholarly profiles here.
