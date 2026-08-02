@@ -117,13 +117,14 @@ export const practiceAreas: PracticeArea[] = [
       "bootleg-to-binge-megafilmeshd-shutdown"
     ],
     engagements: [
-      "Retained in a matter involving a Fortune 100 company concerning AI training data. Provided economic analysis and was deposed. Details are limited by confidentiality."
+      "Retained by the defense in a California matter concerning AI training data involving a Fortune 100 company. Provided economic analysis and was deposed. Further detail is limited by confidentiality.",
+      "Available for both plaintiff- and defense-side engagements. Conflicts check completed at intake."
     ],
     faq: [
       {
         question: "Have you testified in an AI training data case?",
         answer:
-          "I have been retained in an AI training data matter involving a Fortune 100 company and was deposed in that engagement. I have not yet testified at trial. Further detail is limited by confidentiality obligations."
+          "I was retained by the defense in a California matter concerning AI training data involving a Fortune 100 company, and was deposed in that engagement. I have not yet testified at trial. Further detail is limited by confidentiality obligations."
       },
       {
         question: "How do you quantify market harm from generative AI outputs?",
