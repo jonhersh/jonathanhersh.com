@@ -47,4 +47,9 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # The action defaults to wrangler 3, which cannot deploy an
+          # assets-only Worker — wrangler.jsonc has no `main`, so v3 aborts with
+          # "Missing entry-point". Pinned to the v4 release verified locally
+          # rather than floating, so a wrangler release can't break deploys.
+          wranglerVersion: "4.69.0"
           command: deploy
