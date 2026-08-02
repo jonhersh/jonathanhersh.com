@@ -62,6 +62,11 @@ export const site = {
       "Causal Inference",
       "Econometrics",
       "Expert Witness Testimony",
+      "AI Training Data and Copyright",
+      "Piracy Economics",
+      "Copyright Enforcement",
+      "Website Blocking",
+      "Platform Data and Measurement",
       "Platform Economics",
       "API Strategy",
       "Antitrust Economics",
@@ -371,9 +376,15 @@ export const site = {
   expertWitness: {
     headline: "AI Expert Witness & Economic Consulting",
     /** Direct-answer block (~55 words) sized for featured-snippet extraction. */
+    /**
+     * Claims here are calibrated to the actual record: expert reports and
+     * deposition testimony, no trial testimony yet. Overstating testifying
+     * experience is the first thing opposing counsel tests on voir dire —
+     * update this the moment the record changes, and not before.
+     */
     leadAnswer:
-      "An AI expert witness economist analyzes and testifies about how algorithms, data, and market structure produce economic harm in litigation. Jonathan Hersh, PhD is a tenured economics professor retained in disputes over AI systems, platform conduct, API access restrictions, and antitrust claims in digital markets — providing expert reports, depositions, and trial testimony.",
-    body: "I provide expert analysis and testimony in complex litigation involving artificial intelligence, digital platforms, and technology-driven economic harm. My work focuses on matters where legal outcomes depend on a clear, rigorous understanding of algorithms, data, market structure, and economic impact. I am frequently retained in disputes involving AI systems, platform conduct, API access, and alleged anticompetitive or exclusionary behavior, with an emphasis on methodological rigor, transparency, and clarity under adversarial scrutiny.",
+      "An AI expert witness economist analyzes how algorithms, data, and market structure produce economic harm in litigation. Jonathan Hersh, PhD is a tenured economics professor retained in disputes over AI training data, copyright and piracy damages, platform data and measurement, and antitrust in digital markets — providing expert reports and deposition testimony, grounded in peer-reviewed research.",
+    body: "I provide economic analysis and testimony in complex litigation involving artificial intelligence, digital platforms, and technology-driven economic harm. My work focuses on matters where the legal outcome depends on a rigorous understanding of algorithms, data, market structure, and measurable economic impact. I have been retained in disputes involving AI training data, platform conduct, and API access, and I have been deposed. What I bring that most economists cannot is a peer-reviewed publication record in the specific literatures these cases are argued against — digital copyright enforcement, platform economics, and applied machine learning.",
     areasOfTestimony: [
       "AI and algorithmic decision-making",
       "Antitrust and competition in digital markets",
@@ -409,9 +420,9 @@ export const site = {
           "Written expert reports and declarations with supporting exhibits, designed for admissibility and clarity under scrutiny."
       },
       {
-        title: "Depositions & Testimony",
+        title: "Deposition Testimony",
         description:
-          "Deposition preparation and live testimony, including cross-examination support and rebuttal analysis."
+          "Deposition testimony and preparation, including rebuttal analysis and support for examining opposing experts."
       },
       {
         title: "Consulting Support",
@@ -423,7 +434,7 @@ export const site = {
       "Expert reports and declarations",
       "Exhibit preparation and data visualizations",
       "Replication packages with documented methodology",
-      "Deposition and trial testimony",
+      "Deposition testimony",
       "Rebuttal reports and supplemental analyses"
     ],
     whyMe: [
@@ -436,6 +447,9 @@ export const site = {
     contactCta:
       "For expert witness matters or consulting, request a consult (conflicts check available).",
     retainedFor: [
+      "AI training data acquisition, market harm, and copyright damages",
+      "Piracy damages, website blocking, and copyright enforcement effectiveness",
+      "Platform data, metrics, and measurement disputes",
       "Alleged anticompetitive conduct involving APIs or interoperability",
       "Economic damages from website blocking or platform exclusion",
       "AI performance claims and model evaluation disputes",
@@ -445,8 +459,8 @@ export const site = {
     qualifications: [
       "Tenured Associate Professor of Economics & Management Science",
       "PhD Economist with applied data science experience",
-      "Peer-reviewed researcher and published author",
-      "Extensive experience presenting technical analysis in adversarial settings"
+      "Peer-reviewed publications in the digital copyright and platform economics literatures these cases are argued against",
+      "Retained and deposed in an AI training data matter"
     ],
     process: [
       "Initial consultation to assess theory of harm, timelines, and data availability",

@@ -10,6 +10,7 @@ import {
   professionalServiceSchema,
   webPageSchema
 } from "@/lib/seo";
+import { practiceAreas } from "@/src/content/practice-areas";
 import { pageSeo, site } from "@/src/content/site";
 
 export const metadata = buildMetadata(
@@ -57,6 +58,41 @@ export default function ExpertWitnessPage() {
             </Link>
           </div>
         </header>
+
+        {/* Practice areas — placed directly under the hero because these are
+            the pages retaining counsel is actually looking for, and the hub
+            page's job is to route them there quickly. */}
+        <section className="rounded-3xl border border-brand-ink/10 bg-white/85 p-8 md:p-10">
+          <h2 className="text-3xl md:text-4xl">Practice areas</h2>
+          <p className="mt-3 max-w-3xl text-lg leading-8 text-brand-ink/80">
+            Each area has a dedicated page covering the questions those matters turn on, the
+            methods applied, and the peer-reviewed research behind the analysis.
+          </p>
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            {practiceAreas.map((area) => (
+              <article
+                key={area.slug}
+                className="rounded-2xl border border-brand-ink/10 bg-[#ecebe8]/50 p-8"
+              >
+                <h3 className="text-2xl leading-tight">
+                  <Link
+                    href={`/expert-witness/${area.slug}`}
+                    className="hover:text-brand-ocean"
+                  >
+                    {area.navLabel}
+                  </Link>
+                </h3>
+                <p className="mt-3 text-base leading-7 text-brand-ink/80">{area.leadAnswer}</p>
+                <Link
+                  href={`/expert-witness/${area.slug}`}
+                  className="mt-4 inline-block text-sm font-semibold text-brand-ocean hover:underline"
+                >
+                  {area.navLabel} detail →
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
 
         {/* Engagement Types */}
         <section className="rounded-3xl border border-brand-ink/10 bg-white/85 p-8 md:p-10">

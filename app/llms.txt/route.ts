@@ -1,3 +1,4 @@
+import { practiceAreas } from "@/src/content/practice-areas";
 import { abstractText, papersByNewest } from "@/src/content/research";
 import { site } from "@/src/content/site";
 
@@ -47,6 +48,12 @@ function buildLlmsTxt(): string {
   lines.push(
     `- [Expert Witness](${base}/expert-witness): ${site.expertWitness.leadAnswer}`
   );
+  // Practice-area pages are listed individually because an answer engine
+  // resolving a specific litigation topic should be pointed at the page
+  // scoped to it, not at the hub.
+  for (const area of practiceAreas) {
+    lines.push(`  - [${area.navLabel}](${base}/expert-witness/${area.slug}): ${area.leadAnswer}`);
+  }
   lines.push(
     `- [Research](${base}/research): Peer-reviewed publications on AI, labor markets, platform economics, and applied machine learning.`
   );
@@ -93,6 +100,42 @@ function buildLlmsTxt(): string {
     lines.push(`### ${item.question}`);
     lines.push("");
     lines.push(item.answer);
+    lines.push("");
+  }
+
+  // Per-area detail. The question lists matter most here: they are phrased the
+  // way retaining counsel actually describes a matter, which is what a
+  // retrieval step matches against.
+  lines.push("## Expert witness practice areas");
+  lines.push("");
+  for (const area of practiceAreas) {
+    lines.push(`### ${area.title}`);
+    lines.push("");
+    lines.push(area.leadAnswer);
+    lines.push("");
+    lines.push(`Page: ${base}/expert-witness/${area.slug}`);
+    lines.push("");
+    lines.push("Questions these matters turn on:");
+    for (const question of area.questions) {
+      lines.push(`- ${question}`);
+    }
+    lines.push("");
+    lines.push("Methods applied:");
+    for (const method of area.methods) {
+      lines.push(`- ${method}`);
+    }
+    lines.push("");
+    if (area.engagements.length > 0) {
+      lines.push("Relevant engagements:");
+      for (const engagement of area.engagements) {
+        lines.push(`- ${engagement}`);
+      }
+      lines.push("");
+    }
+    lines.push("Grounding peer-reviewed research:");
+    for (const slug of area.groundingPapers) {
+      lines.push(`- ${base}/research/${slug}`);
+    }
     lines.push("");
   }
 

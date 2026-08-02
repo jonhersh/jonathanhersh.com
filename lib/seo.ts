@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { PracticeArea } from "@/src/content/practice-areas";
 import { abstractText, type Paper } from "@/src/content/research";
 import { site } from "@/src/content/site";
 
@@ -229,6 +230,43 @@ export function professionalServiceSchema() {
         }
       }))
     }
+  };
+}
+
+/**
+ * Per-practice-area Service markup. `professionalServiceSchema` describes the
+ * practice as a whole; this narrows to one litigation domain so an answer
+ * engine resolving "AI training data expert witness" finds a service entity
+ * scoped to that phrase rather than a generic consulting listing.
+ *
+ * `about` carries the questions the matters turn on — those are the strings
+ * that actually match how retaining counsel phrases a search.
+ */
+export function practiceAreaSchema(area: PracticeArea) {
+  const url = `${site.metadata.baseUrl}/expert-witness/${area.slug}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${url}#service`,
+    name: area.title,
+    url,
+    description: area.leadAnswer,
+    serviceType: area.keywords,
+    provider: personRef,
+    areaServed: {
+      "@type": "Country",
+      name: "United States"
+    },
+    isPartOf: { "@id": `${site.metadata.baseUrl}/expert-witness#service` },
+    about: area.questions.map((question) => ({
+      "@type": "Thing",
+      name: question
+    })),
+    // Citations to the peer-reviewed work are what separate a substantiated
+    // expert claim from an asserted one.
+    citation: area.groundingPapers.map((slug) => ({
+      "@id": `${site.metadata.baseUrl}/research/${slug}#article`
+    }))
   };
 }
 

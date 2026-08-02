@@ -5,6 +5,7 @@ import { CitationBlock } from "@/components/citation-block";
 import { JsonLd } from "@/components/json-ld";
 import { apaCitation, bibtexCitation } from "@/lib/citation";
 import { breadcrumbSchema, buildMetadata, scholarlyArticleSchema } from "@/lib/seo";
+import { practiceAreasForPaper } from "@/src/content/practice-areas";
 import { getPaper, papers, papersByNewest, type AbstractBlock } from "@/src/content/research";
 
 export function generateStaticParams() {
@@ -76,6 +77,8 @@ export default function PaperPage({ params }: { params: { slug: string } }) {
   const related = papersByNewest()
     .filter((item) => item.slug !== paper.slug)
     .slice(0, 3);
+
+  const relatedPractice = practiceAreasForPaper(paper.slug);
 
   return (
     <section className="section-space">
@@ -174,14 +177,37 @@ export default function PaperPage({ params }: { params: { slug: string } }) {
           </div>
         </section>
 
-        <div className="rounded-xl border border-brand-ink/10 bg-white/70 p-6">
-          <p className="text-sm text-brand-ink/80">
-            Interested in applying this work to active litigation or policy questions?
-          </p>
-          <Link href="/contact" className="secondary-btn mt-4">
-            Request a Consult
-          </Link>
-        </div>
+        {relatedPractice.length > 0 ? (
+          <div className="rounded-xl border border-brand-ink/10 bg-white/70 p-6">
+            <p className="text-sm text-brand-ink/80">
+              This research grounds my expert witness work in{" "}
+              {relatedPractice.map((area, index) => (
+                <span key={area.slug}>
+                  {index > 0 ? (index === relatedPractice.length - 1 ? " and " : ", ") : null}
+                  <Link
+                    href={`/expert-witness/${area.slug}`}
+                    className="font-semibold text-brand-ocean hover:underline"
+                  >
+                    {area.navLabel}
+                  </Link>
+                </span>
+              ))}
+              .
+            </p>
+            <Link href="/contact" className="secondary-btn mt-4">
+              Request a Consult
+            </Link>
+          </div>
+        ) : (
+          <div className="rounded-xl border border-brand-ink/10 bg-white/70 p-6">
+            <p className="text-sm text-brand-ink/80">
+              Interested in applying this work to active litigation or policy questions?
+            </p>
+            <Link href="/contact" className="secondary-btn mt-4">
+              Request a Consult
+            </Link>
+          </div>
+        )}
       </div>
 
       <JsonLd

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { practiceAreas } from "@/src/content/practice-areas";
 import { papersByNewest } from "@/src/content/research";
 import { site } from "@/src/content/site";
 
@@ -30,6 +31,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route.priority
   }));
 
+  // Practice-area pages. Retaining counsel searches by the matter they are
+  // litigating, so these are the commercial entry points — ranked just under
+  // the expert witness hub itself.
+  const practiceRoutes = practiceAreas.map((area) => ({
+    url: `${site.metadata.baseUrl}/expert-witness/${area.slug}`,
+    lastModified: site.metadata.lastReviewed,
+    changeFrequency: "monthly" as const,
+    priority: 0.85
+  }));
+
   // Per-paper pages. These carry the abstracts and citations, so they are the
   // canonical citable unit for each publication — not the PDF.
   const paperRoutes = papersByNewest().map((paper) => ({
@@ -39,5 +50,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7
   }));
 
-  return [...staticRoutes, ...paperRoutes];
+  return [...staticRoutes, ...practiceRoutes, ...paperRoutes];
 }
