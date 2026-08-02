@@ -96,7 +96,8 @@ export const site = {
       { label: "Award", value: "2023 BBVA Foundation Award for Data Science and Big Data" },
       { label: "Industry experience", value: "Machine learning scientist at Workhelix; data scientist at the World Bank and Inter-American Development Bank" },
       { label: "Previously taught at", value: "MIT and Wellesley College" },
-      { label: "Expert witness focus", value: "AI systems, antitrust in digital markets, platform and API economics, economic damages" },
+      { label: "Expert witness focus", value: "AI training data and copyright, piracy and copyright enforcement damages, platform data and measurement, antitrust in digital markets" },
+    { label: "Testimony", value: "Expert reports and deposition testimony" },
       { label: "Initial case assessment", value: "Typically 3–5 business days" }
     ]
   },
@@ -161,7 +162,7 @@ export const site = {
         title: "Expert Witness",
         bullets: [
           "Economic damages and liability analysis in AI, platform, and technology disputes",
-          "Expert reports, depositions, and trial testimony",
+          "Expert reports, declarations, and deposition testimony",
           "Conflicts check and initial assessment within days"
         ],
         cta: { label: "Request a Consult", href: "/contact" }
@@ -229,7 +230,7 @@ export const site = {
       {
         question: "Is Jonathan Hersh available as an expert witness?",
         answer:
-          "Yes. He is retained in disputes involving AI and algorithmic decision-making, antitrust and competition in digital markets, platform conduct and API access restrictions, and economic damages in technology cases. Engagements include expert reports, depositions, and trial testimony. A confidentiality and conflicts review is completed at intake, and initial assessments are typically scoped within 3\u20135 business days."
+          "Yes. He is retained in disputes involving AI and algorithmic decision-making, antitrust and competition in digital markets, platform conduct and API access restrictions, and economic damages in technology cases. Engagements include expert reports, declarations, and deposition testimony. A confidentiality and conflicts review is completed at intake, and initial assessments are typically scoped within 3\u20135 business days."
       },
       {
         question: "What are Jonathan Hersh\u2019s credentials?",
@@ -502,7 +503,7 @@ export const site = {
       {
         question: "What deliverables do you provide?",
         answer:
-          "I provide expert reports, declarations, exhibits, replication packages with documented methodology, deposition and trial testimony, and rebuttal analyses. All work is conducted with emphasis on reproducibility and admissibility."
+          "I provide expert reports, declarations, exhibits, replication packages with documented methodology, deposition testimony, and rebuttal analyses. All work is conducted with emphasis on reproducibility and admissibility."
       }
     ]
   },

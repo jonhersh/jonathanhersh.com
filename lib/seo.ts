@@ -136,7 +136,7 @@ export function personSchema() {
         name: "Expert Witness Economist",
         occupationalCategory: "19-3011.00",
         skills:
-          "Economic damages analysis, causal inference, antitrust economics, platform economics, AI model evaluation, expert reports, deposition and trial testimony"
+          "Economic damages analysis, causal inference, antitrust economics, platform economics, AI model evaluation, expert reports and deposition testimony"
       }
     ],
     alumniOf: [
